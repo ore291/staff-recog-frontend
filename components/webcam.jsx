@@ -86,7 +86,7 @@ const WebcamCapture = ({ longitude, latitude }) => {
           CLOCK IN
         </button>
       </div>
-      <h2>{staff !== "" ? staff + "clocked in successfully" : ''}</h2> 
+      <h2>{staff}</h2> 
     </div>
   );
 };

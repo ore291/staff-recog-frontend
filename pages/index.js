@@ -13,7 +13,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Link href='/admin' ><p className='text-2xl cursor-pointer font-bold'>ADMIN PANEL</p></Link>
+        <h1 className="text-3xl">STAFF FACE RECOGNITION</h1>
+        <Link href='/admin' ><a className='text-sm hover:cursor-pointer hover:text-green-500 font-bold'>ENTER ADMIN PANEL</a></Link>
         <GeoLocation/>
       </main>
     </div>

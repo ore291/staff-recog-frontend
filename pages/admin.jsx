@@ -18,7 +18,7 @@ const Admin = () => {
       const res = await axios.get(
         "https://staff-face-recog.herokuapp.com/logs"
       );
-      setLogs(res.data);
+      setLogs(res.data.logs);
     } catch (error) {
       console.log(error);
     }
@@ -29,7 +29,7 @@ const Admin = () => {
       const res = await axios.get(
         "https://staff-face-recog.herokuapp.com/staffs"
       );
-      setStaffs(res.data);
+      setStaffs(res.data.staff);
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +45,7 @@ const Admin = () => {
     formData.append("first_name", firstNameRef.current.value);
     formData.append("last_name", lastNameRef.current.value);
     console.log(formData);
-    
+
     // var image = imageRef.current.value;
     // var email = emailRef.current.value;
     // var phone_number = phoneNumberRef.current.value;
@@ -53,22 +53,23 @@ const Admin = () => {
     // var last_name = lastNameRef.current.value;
 
     const res = await axios.post(
-      "https://staff-face-recog.herokuapp.com/register", formData
-    //   {
-    //     image: image,
-    //     phone_number: phone_number,
-    //     email: email,
-    //     first_name: first_name,
-    //     last_name: last_name,
-    //   }
+      "https://staff-face-recog.herokuapp.com/register",
+      formData
+      //   {
+      //     image: image,
+      //     phone_number: phone_number,
+      //     email: email,
+      //     first_name: first_name,
+      //     last_name: last_name,
+      //   }
     );
   };
   return (
-    <div className="max-w-5xl mx-auto mt-10 flex flex-col items-center justify-center">
+    <div className="max-w-7xl mx-auto m-10  ">
       <h1 className="text-2xl font-bold uppercase">admin panel</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        <div>
-          <h2>Register Staffs</h2>
+      <div className="flex flex-col sm:flex-row space-x-5  items-center justify-center">
+        <div className=" p-2">
+          <h2 className="fomt-bold text-xl">Register Staffs</h2>
           <div>
             <form
               onSubmit={register}
@@ -82,6 +83,7 @@ const Admin = () => {
                 type="text"
                 autoComplete="name"
                 required
+                ref={firstNameRef}
               />
               <label htmlFor="last_name">Last Name</label>
               <input
@@ -90,6 +92,7 @@ const Admin = () => {
                 type="text"
                 autoComplete="name"
                 required
+                ref={lastNameRef}
               />
               <label htmlFor="email">Email</label>
               <input
@@ -98,6 +101,7 @@ const Admin = () => {
                 type="email"
                 autoComplete="email"
                 required
+                ref={emailRef}
               />
               <label htmlFor="phone_number">Phone Number</label>
               <input
@@ -106,18 +110,82 @@ const Admin = () => {
                 type="text"
                 autoComplete="name"
                 required
+                ref={phoneNumberRef}
               />
               <label htmlFor="image">Staff Image</label>
-              <input type="file" name="image" id="image-input" accept=".jpeg, .png, .jpg" />
+              <input
+                type="file"
+                name="image"
+                id="image-input"
+                accept=".jpeg, .png, .jpg"
+              />
               <br />
               <br />
-              <button className="grow bg-black text-white p-2 m-2" type="submit">Register</button>
+              <button
+                className="grow bg-black text-white p-2 m-2"
+                type="submit"
+              >
+                Register
+              </button>
             </form>
           </div>
         </div>
-        <div>
-            a
+        <div className="">
+          <h2 className="font-bold text-xl">Staff Clock ins</h2>
+          <table className="table-auto border-separate [border-spacing:0.75rem] divide-y border-gray-300">
+            <thead>
+              <tr>
+                <th>Staff</th>
+                <th>date and time</th>
+                <th>latitude</th>
+                <th>longitude</th>
+              </tr>
+            </thead>
+            <tbody>
+             {
+               logs.length > 0 ? logs.map((lg)=>(
+                <tr key={lg.id} className="border-b border-gray-400">
+                  <td>{`${staffs[lg.staff_id].first_name} ${staffs[lg.staff_id].last_name}`}</td>
+                  <td>{lg.created_date}</td>
+                  <td>{lg.longitude}</td>
+                  <td>{lg.latitude}</td>
+              </tr> 
+               )) : <p>loading logs ...</p>
+             }
+            </tbody>
+          </table>
         </div>
+        
+        
+      </div>
+      <div className="w-full flex items-center justify-center">
+          <div>
+          <h2 className="font-bold text-2xl text-center">
+            STAFFS
+          </h2>
+          <table className="table-auto border-separate [border-spacing:0.75rem] divide-y divide-gray-300">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Staff ID</th>
+                <th>Image</th>
+              </tr>
+            </thead>
+            <tbody>
+             {
+               staffs.length > 0 ? staffs.map((st)=>(
+                <tr key={st.id}>
+                  <td>{st.first_name}</td>
+                  <td>{st.last_name}</td>
+                  <td>{st.id}</td>
+                  {/* <td><img src={st.image} alt="" srcset="" /></td> */}
+              </tr> 
+               )) : <p>loading staffs ...</p>
+             }
+            </tbody>
+          </table>
+          </div>
       </div>
     </div>
   );
