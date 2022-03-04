@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import Webcam from "react-webcam";
-import Image from 'next/image'
+
 
 const WebcamCapture = ({ longitude, latitude }) => {
   const [staff, setStaff] = useState("");
