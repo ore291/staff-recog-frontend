@@ -16,6 +16,7 @@ const WebcamCapture = ({ longitude, latitude }) => {
       try {
         const res = await axios.post(
           "https://staff-face-recog.herokuapp.com/verify",
+          // "http://127.0.0.1:5000/verify",
           {
             image: image,
             staff_id: staff_id,
@@ -24,7 +25,7 @@ const WebcamCapture = ({ longitude, latitude }) => {
           }
         );
         setStaff(res.data.staff);
-        alert | "Verification Done";
+        alert("Verification Done");
         setLoading(false);
       } catch (error) {
         console.log(error);

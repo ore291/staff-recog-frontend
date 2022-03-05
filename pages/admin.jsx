@@ -19,6 +19,7 @@ const Admin = () => {
     try {
       const res = await axios.get(
         "https://staff-face-recog.herokuapp.com/logs"
+        // "http://127.0.0.1:5000/logs"
       );
       setLogs(res.data.logs);
     } catch (error) {
@@ -30,6 +31,7 @@ const Admin = () => {
     try {
       const res = await axios.get(
         "https://staff-face-recog.herokuapp.com/staffs"
+        // "http://127.0.0.1:5000/staffs"
       );
       setStaffs(res.data.staff);
     } catch (error) {
@@ -55,7 +57,8 @@ const Admin = () => {
     // var last_name = lastNameRef.current.value;
 
     const res = await axios.post(
-      "https://staff-face-recog.herokuapp.com/register",
+      // "https://staff-face-recog.herokuapp.com/register",
+      "http://127.0.0.1:5000/register",
       formData
       //   {
       //     image: image,
@@ -158,7 +161,7 @@ const Admin = () => {
               {logs.length && staffs.length > 0 ? 
                 logs.map((lg) => 
                   <tr key={lg.id} className="border-b border-gray-400">
-                    <td>{`${staffs[lg.staff_id].first_name} ${
+                    <td>{`${staffs[lg.staff_id - 1].first_name} ${
                       staffs[lg.staff_id].last_name
                     }`}</td>
                     <td>{lg.created_date}</td>
