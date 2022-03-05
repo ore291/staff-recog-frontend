@@ -155,8 +155,8 @@ const Admin = () => {
               </tr>
             </thead>
             <tbody>
-              {logs.length && staffs.length > 0 ? (
-                logs.map((lg) => (
+              {logs.length && staffs.length > 0 ? 
+                logs.map((lg) => 
                   <tr key={lg.id} className="border-b border-gray-400">
                     <td>{`${staffs[lg.staff_id].first_name} ${
                       staffs[lg.staff_id].last_name
@@ -164,11 +164,10 @@ const Admin = () => {
                     <td>{lg.created_date}</td>
                     <td>{lg.longitude}</td>
                     <td>{lg.latitude}</td>
-                  </tr>
-                ))
-              ) : (
+                  </tr>)
+               : 
                 <p>loading logs ...</p>
-              )}
+              }
             </tbody>
           </table>
         </div>
