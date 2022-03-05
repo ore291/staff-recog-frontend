@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import Loader from "../components/loader";
 const Admin = () => {
   const [logs, setLogs] = useState([]);
   const [staffs, setStaffs] = useState([]);
@@ -7,6 +8,7 @@ const Admin = () => {
   const phoneNumberRef = useRef("");
   const firstNameRef = useRef("");
   const lastNameRef = useRef("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getLogs();
@@ -36,7 +38,7 @@ const Admin = () => {
   };
   const register = async (event) => {
     event.preventDefault();
-
+    setLoading(true);
     const formData = new FormData();
     const fileInput = document.querySelector("#image-input");
     formData.append("image", fileInput.files[0]);
@@ -63,12 +65,19 @@ const Admin = () => {
       //     last_name: last_name,
       //   }
     );
+    if (res.data === "item created") {
+      setLoading(false);
+      alert("Staff registered successfully");
+      getStaffs();
+    } else {
+      alert("registeration failed");
+    }
   };
   return (
     <div className="max-w-7xl mx-auto m-10  ">
       <h1 className="text-2xl font-bold uppercase">admin panel</h1>
-      <div className="flex flex-col sm:flex-row space-x-5  items-center justify-center">
-        <div className=" p-2">
+      <div className="flex flex-col sm:flex-row space-x-5 justify-center">
+        <div className="p-2">
           <h2 className="fomt-bold text-xl">Register Staffs</h2>
           <div>
             <form
@@ -121,18 +130,22 @@ const Admin = () => {
               />
               <br />
               <br />
-              <button
-                className="grow bg-black text-white p-2 m-2"
-                type="submit"
-              >
-                Register
-              </button>
+              {loading ? (
+                <Loader />
+              ) : (
+                <button
+                  className="grow bg-black text-white p-2 m-2"
+                  type="submit"
+                >
+                  Register
+                </button>
+              )}
             </form>
           </div>
         </div>
         <div className="">
           <h2 className="font-bold text-xl">Staff Clock ins</h2>
-          <table className="table-auto border-separate [border-spacing:0.75rem] divide-y border-gray-300">
+          <table className="table-auto border-separate border-spacing-[0.75rem] divide-y border-gray-300">
             <thead>
               <tr>
                 <th>Staff</th>
@@ -142,27 +155,27 @@ const Admin = () => {
               </tr>
             </thead>
             <tbody>
-             {
-               logs.length > 0 ? logs.map((lg)=>(
-                <tr key={lg.id} className="border-b border-gray-400">
-                  <td>{`${staffs[lg.staff_id].first_name} ${staffs[lg.staff_id].last_name}`}</td>
-                  <td>{lg.created_date}</td>
-                  <td>{lg.longitude}</td>
-                  <td>{lg.latitude}</td>
-              </tr> 
-               )) : <p>loading logs ...</p>
-             }
+              {logs.length && staffs.length > 0 ? (
+                logs.map((lg) => (
+                  <tr key={lg.id} className="border-b border-gray-400">
+                    <td>{`${staffs[lg.staff_id].first_name} ${
+                      staffs[lg.staff_id].last_name
+                    }`}</td>
+                    <td>{lg.created_date}</td>
+                    <td>{lg.longitude}</td>
+                    <td>{lg.latitude}</td>
+                  </tr>
+                ))
+              ) : (
+                <p>loading logs ...</p>
+              )}
             </tbody>
           </table>
         </div>
-        
-        
       </div>
       <div className="w-full flex items-center justify-center">
-          <div>
-          <h2 className="font-bold text-2xl text-center">
-            STAFFS
-          </h2>
+        <div>
+          <h2 className="font-bold text-2xl text-center">STAFFS</h2>
           <table className="table-auto border-separate [border-spacing:0.75rem] divide-y divide-gray-300">
             <thead>
               <tr>
@@ -173,19 +186,21 @@ const Admin = () => {
               </tr>
             </thead>
             <tbody>
-             {
-               staffs.length > 0 ? staffs.map((st)=>(
-                <tr key={st.id}>
-                  <td>{st.first_name}</td>
-                  <td>{st.last_name}</td>
-                  <td>{st.id}</td>
-                  {/* <td><img src={st.image} alt="" srcset="" /></td> */}
-              </tr> 
-               )) : <p>loading staffs ...</p>
-             }
+              {staffs.length > 0 ? (
+                staffs.map((st) => (
+                  <tr key={st.id}>
+                    <td>{st.first_name}</td>
+                    <td>{st.last_name}</td>
+                    <td>{st.id}</td>
+                    {/* <td><img src={st.image} alt="" srcset="" /></td> */}
+                  </tr>
+                ))
+              ) : (
+                <p>loading staffs ...</p>
+              )}
             </tbody>
           </table>
-          </div>
+        </div>
       </div>
     </div>
   );
