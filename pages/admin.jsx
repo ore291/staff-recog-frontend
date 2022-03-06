@@ -162,7 +162,7 @@ const Admin = () => {
                 logs.map((lg) => 
                   <tr key={lg.id} className="border-b border-gray-400">
                     <td>{`${staffs[lg.staff_id - 1].first_name} ${
-                      staffs[lg.staff_id].last_name
+                      staffs[lg.staff_id - 1].last_name
                     }`}</td>
                     <td>{lg.created_date}</td>
                     <td>{lg.longitude}</td>
