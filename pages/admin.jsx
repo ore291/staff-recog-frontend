@@ -57,8 +57,8 @@ const Admin = () => {
     // var last_name = lastNameRef.current.value;
 
     const res = await axios.post(
-      // "https://staff-face-recog.herokuapp.com/register",
-      "http://127.0.0.1:5000/register",
+      "https://staff-face-recog.herokuapp.com/register",
+      // "http://127.0.0.1:5000/register",
       formData
       //   {
       //     image: image,
