@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import GeoLocation from '../components/GeoLocation'
+import WebcamCapture from '../components/webcam'
 
 
 export default function Home() {
@@ -14,7 +15,8 @@ export default function Home() {
       <main>
         <h1 className="text-3xl">STAFF FACE RECOGNITION</h1>
         <Link href='/admin' ><a className='text-sm hover:cursor-pointer hover:text-green-500 font-bold'>ENTER ADMIN PANEL</a></Link>
-        <GeoLocation/>
+  
+        <WebcamCapture />
       </main>
     </div>
   )
