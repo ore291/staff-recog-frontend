@@ -30,7 +30,7 @@ const WebcamCapture = ({ longitude, latitude }) => {
           }
         );
         console.log(res.data);
-		setStaff(res.data)
+		setStaff(res.data.error)
         alert("Verification Done");
         setLoading(false);
       } catch (error) {
